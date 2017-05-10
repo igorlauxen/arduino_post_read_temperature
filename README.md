@@ -8,7 +8,7 @@
 - Remove the proxy from your arduino
 	- Go to the Arduino IDE
 	- Select File > Examples > Bridge > YunSerialTerminal
-	- Upload the code to your arduino
+	- Upload the code (CurlPost.ino) to your arduino
 	- Access your arduino by [Putty](http://www.putty.org/)
 		- To access you must check the **Port** that your arduino is connected
 		- Then in the putty select the Serial option
