@@ -19,14 +19,17 @@ Tests over tests
 
 #include <Process.h>
 
-//services setups       
-String URL_TO_SERVICE = "https://iotmmsi841640trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/push/4328715f-0b9f-4cd0-8ea9-8933d8addb26";
+//services setups     
+String INUMBER_TRIAL = "i841640"; 
+String DEVICE_ID = "4328715f-0b9f-4cd0-8ea9-8933d8addb26";
 String MESSAGE_TYPE = "a5e26c45db88d556aef1";
-//basic 64
+String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/push/"+DEVICE_ID;
+
+//basic 64 -- use postman to generate it
 String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
-//entries
+
+//dummy entries
 int CALOR_TEST = 5000;
-int PRESSAO_TEST = 32;
 String SENDER = "Arduino Yun";
 
 // Everytime you reset your arduino, you need to reset your proxy again
@@ -36,7 +39,7 @@ export https_proxy=http://proxy.wdf.sap.corp:8080
 */
 
 
-String createCurlCommand (String url, int calor, int pressao, String sender, String authentication, String messageType) {
+String createCurlCommand (String url, int calor, String sender, String authentication, String messageType) {
     
   String curlCmd = "curl ";
   //header parameters
@@ -67,7 +70,7 @@ String createCurlCommand (String url, int calor, int pressao, String sender, Str
 }
 
 void post(){
-  String curlCmd = createCurlCommand( URL_TO_SERVICE, CALOR_TEST, PRESSAO_TEST, SENDER, USER_AUTHENTICATION, MESSAGE_TYPE );
+  String curlCmd = createCurlCommand( URL_TO_SERVICE, CALOR_TEST, SENDER, USER_AUTHENTICATION, MESSAGE_TYPE );
   Serial.println("Curl Cmd Command being saved: ");
   Serial.println(curlCmd);
   Process process;
@@ -85,7 +88,6 @@ void post(){
 }
 
 void setup(){
-  //post();
   Bridge.begin();
   while(!Serial);
   Serial.println("Starting...");
@@ -94,5 +96,4 @@ void setup(){
 void loop(){
     Serial.println("Inside loop() \n");
     post();
-    //delay(5000);
 }
