@@ -29,3 +29,7 @@
 - Go to your HCP IoT launchpad
 - Click Display Stored Messages tile
 - Select T_IOT_HTTP_PUSH
+
+## Support links
+
+- [Arduino Yun Starter Kit](https://www.arduino.cc/en/Guide/ArduinoYun)
