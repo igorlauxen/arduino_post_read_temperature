@@ -29,7 +29,7 @@ String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand
 String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
 
 //dummy entries
-int CALOR_TEST = 5000;
+int CALOR_TEST = 712;
 String SENDER = "Arduino Yun";
 
 // Everytime you reset your arduino, you need to reset your proxy again
@@ -87,6 +87,17 @@ void post(){
   }
 }
 
+void remove_proxy(){
+  Process p;
+  Serial.println("Removing proxy");
+  String remove_http = "export http_proxy=http://proxy.wdf.sap.corp:8080";
+  String remove_https = "export https_proxy=http://proxy.wdf.sap.corp:8080";
+  p.runShellCommand(remove_http + " " + remove_https);
+  
+  // do nothing until the process finishes
+  while (p.running());
+}
+
 void setup(){
   Bridge.begin();
   while(!Serial);
@@ -94,6 +105,6 @@ void setup(){
 }
 
 void loop(){
-    Serial.println("Inside loop() \n");
+    remove_proxy();
     post();
 }
