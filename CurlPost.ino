@@ -29,7 +29,7 @@ String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand
 String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
 
 //dummy entries
-int CALOR_TEST = 712;
+int CALOR_TEST = 130;
 String SENDER = "Arduino Yun";
 
 // Everytime you reset your arduino, you need to reset your proxy again
@@ -77,7 +77,6 @@ void post(){
   process.runShellCommandAsynchronously(curlCmd);
 
   while (process.running()){
-    Serial.println("Running process");
     while (process.available()>0) {
       char c = process.read();
       //Serial.println(c);
@@ -87,15 +86,24 @@ void post(){
   }
 }
 
-void remove_proxy(){
-  Process p;
-  Serial.println("Removing proxy");
+void remove_http_proxy(){
   String remove_http = "export http_proxy=http://proxy.wdf.sap.corp:8080";
+  remove_proxy(remove_http);
+}
+
+
+void remove_https_proxy(){
   String remove_https = "export https_proxy=http://proxy.wdf.sap.corp:8080";
-  p.runShellCommand(remove_http + " " + remove_https);
-  
+  remove_proxy(remove_https);
+}
+
+void remove_proxy(String proxyCommand){
+  Process p;
+  p.runShellCommand(proxyCommand);
   // do nothing until the process finishes
   while (p.running());
+  Serial.println("Proxy Removed: "+ proxyCommand);
+  
 }
 
 void setup(){
@@ -105,6 +113,7 @@ void setup(){
 }
 
 void loop(){
-    remove_proxy();
+    remove_http_proxy();
+    remove_https_proxy();
     post();
 }
