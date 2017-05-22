@@ -23,15 +23,16 @@ Tests over tests
 String INUMBER_TRIAL = "i841640"; 
 String DEVICE_ID = "32b9f043-8569-464e-8bc4-95c567d98d00";
 String MESSAGE_TYPE = "e0a6c3bab615e97310f0";
-String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/data/"+DEVICE_ID;
+//dummy entries
+int CALOR_TEST = 130;
+String SENDER = "Arduino Yun";
+String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/data/"+DEVICE_ID+"/"+MESSAGE_TYPE+"?test="+CALOR_TEST;
 
 //basic 64 -- use postman to generate it
 //String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
 String USER_AUTHENTICATION = "Bearer b46b9a15c5c0e3e517c9f516e925723";
 
-//dummy entries
-int CALOR_TEST = 130;
-String SENDER = "Arduino Yun";
+
 
 // Everytime you reset your arduino, you need to reset your proxy again
 /*
@@ -45,22 +46,12 @@ String createCurlCommand (String url, int calor, String sender, String authentic
   String curlCmd = "curl ";
   //header parameters
   curlCmd += "--insecure -H  \"Authorization: "+ authentication +"\" ";
-  curlCmd += "-H  \"Content-Type: application/json;charset=utf-8\" ";
+  curlCmd += "-H  \"Content-Type: application/json\" ";
   //type of request
   curlCmd += " -X POST ";
   //body parameters 
   curlCmd += "-d '{";
-  curlCmd += " \"mode\": \"sync\" ,";
-  curlCmd += " \"messageType\": \"";
-  curlCmd += messageType;
-  curlCmd += "\", ";
-  //start messages
-  curlCmd += " \"messages\":[{";
-  curlCmd += "\"test\":\"";
-  curlCmd += calor;
-  curlCmd += "\"";
-  //close messages
-  curlCmd += "}]"; 
+  curlCmd += " \"mode\": \"async\"";
   //close -d
   curlCmd += "}' ";
   //backend url
@@ -114,5 +105,6 @@ void setup(){
 void loop(){
     remove_http_proxy();
     remove_https_proxy();
+    CALOR_TEST = random(1,20);
     post();
 }
