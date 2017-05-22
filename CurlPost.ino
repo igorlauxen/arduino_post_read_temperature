@@ -106,5 +106,6 @@ void loop(){
     remove_http_proxy();
     remove_https_proxy();
     CALOR_TEST = random(1,20);
+    URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/data/"+DEVICE_ID+"/"+MESSAGE_TYPE+"?test="+CALOR_TEST;
     post();
 }
