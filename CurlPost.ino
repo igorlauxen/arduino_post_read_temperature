@@ -21,12 +21,13 @@ Tests over tests
 
 //services setups     
 String INUMBER_TRIAL = "i841640"; 
-String DEVICE_ID = "4328715f-0b9f-4cd0-8ea9-8933d8addb26";
-String MESSAGE_TYPE = "a5e26c45db88d556aef1";
-String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/push/"+DEVICE_ID;
+String DEVICE_ID = "32b9f043-8569-464e-8bc4-95c567d98d00";
+String MESSAGE_TYPE = "e0a6c3bab615e97310f0";
+String URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/data/"+DEVICE_ID;
 
 //basic 64 -- use postman to generate it
-String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
+//String USER_AUTHENTICATION = "Basic aTg0MTY0MDpRYVJ1bGV6MjJA";
+String USER_AUTHENTICATION = "Bearer b46b9a15c5c0e3e517c9f516e925723";
 
 //dummy entries
 int CALOR_TEST = 130;
@@ -43,25 +44,23 @@ String createCurlCommand (String url, int calor, String sender, String authentic
     
   String curlCmd = "curl ";
   //header parameters
-  curlCmd += "-iv --raw -k --insecure -H  \"Authorization: "+ authentication +"\" ";
+  curlCmd += "--insecure -H  \"Authorization: "+ authentication +"\" ";
+  curlCmd += "-H  \"Content-Type: application/json;charset=utf-8\" ";
   //type of request
   curlCmd += " -X POST ";
   //body parameters 
   curlCmd += "-d '{";
-  curlCmd += " \"method\": \"http\" ,";
+  curlCmd += " \"mode\": \"sync\" ,";
   curlCmd += " \"messageType\": \"";
   curlCmd += messageType;
   curlCmd += "\", ";
   //start messages
   curlCmd += " \"messages\":[{";
-  curlCmd += "\"heat\":\"";
+  curlCmd += "\"test\":\"";
   curlCmd += calor;
   curlCmd += "\"";
   //close messages
-  curlCmd += "}],"; 
-  curlCmd += "\"sender\":\"";
-  curlCmd += sender;
-  curlCmd += "\"";
+  curlCmd += "}]"; 
   //close -d
   curlCmd += "}' ";
   //backend url
