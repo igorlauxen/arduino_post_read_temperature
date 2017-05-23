@@ -1,5 +1,10 @@
 #include <Bridge.h>
 #include <Process.h>
+#include "DHT.h"
+
+#define DHTPIN A0
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
 
 //services setups     
 String INUMBER_TRIAL = "i841640"; 
@@ -44,25 +49,26 @@ void setup(){
   Bridge.begin();
   while(!Serial);
   Serial.println("Starting...");
+  dht.begin(); 
 }
 
 /*
 BLACK = GND
 RED = VCC 5V
-YELLOW = Pin 7 Analog
-
+YELLOW = Pin A0 Dialog
 */
 
 void loop(){
   CALOR_TEST = getTemperatureInCelsus();
   URL_TO_SERVICE = "https://iotmms"+INUMBER_TRIAL+"trial.hanatrial.ondemand.com/com.sap.iotservices.mms/v1/api/http/data/"+DEVICE_ID+"/"+MESSAGE_TYPE+"?test="+CALOR_TEST;
   post();
+  delay(1000);
 }
 
-//https://www.arduino.cc/en/Tutorial/TemperatureWebPanel
 float getTemperatureInCelsus(){
-  double val = analogRead(7);
-  float voltage = val * (5000.0f / 1024.0f);
-  float temperatureC = (voltage - 500.0f) / 10.0f;
-  return temperatureC;
+  float internalTemperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  Serial.println("Temp: " + String(internalTemperature));
+  Serial.println("Hum: " + String(humidity));
+  return internalTemperature;
 }
