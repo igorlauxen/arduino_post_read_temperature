@@ -14,7 +14,7 @@ String USER_AUTHENTICATION = "Bearer b46b9a15c5c0e3e517c9f516e925723";
 //export http_proxy=http://proxy.wdf.sap.corp:8080
 //export https_proxy=http://proxy.wdf.sap.corp:8080 
 
-String createCurlCommand (String url, int calor, String authentication, String messageType) {
+String createCurlCommand (String url, String authentication, String messageType) {
     
   String curlCmd = "curl ";
   //header parameters
@@ -33,7 +33,7 @@ String createCurlCommand (String url, int calor, String authentication, String m
 }
 
 void post(){
-  String curlCmd = createCurlCommand( URL_TO_SERVICE, CALOR_TEST, USER_AUTHENTICATION, MESSAGE_TYPE );
+  String curlCmd = createCurlCommand( URL_TO_SERVICE, USER_AUTHENTICATION, MESSAGE_TYPE );
   Serial.println("Curl Cmd Command being saved: ");
   Serial.println(curlCmd);
   Process process;
