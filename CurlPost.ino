@@ -8,7 +8,7 @@ String MESSAGE_TYPE = "e0a6c3bab615e97310f0";
 //dummy entries
 int CALOR_TEST = 130;
 String URL_TO_SERVICE = "";
-String USER_AUTHENTICATION = "Bearer b46b9a15c5c0e3e517c9f516e925723";
+String USER_AUTHENTICATION = "Bearer YOUR_DEVICE_TOKEN";
 
 // The SAP proxy is handled in the file /etc/profile
 //export http_proxy=http://proxy.wdf.sap.corp:8080
